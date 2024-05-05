@@ -1,4 +1,4 @@
-# Podcast-Chatbot-PodcastBot-LangChain-GPT
+# PodcastBot-LangChain-GPT
+Building a podcast recommendation system with Langchain and OpenAI, launching on Streamlit 
 
-## 1. build an app for chatbot about conan o brien needs a friend 
-## 2. in this app, also allow for recommendation 
+
