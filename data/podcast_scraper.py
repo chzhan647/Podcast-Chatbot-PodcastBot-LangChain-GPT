@@ -12,12 +12,13 @@ def main():
     webpage_data = fetch_webpage_data(BASE_URL)
 
     podcast_data = get_podcast_data(webpage_data)
+    podcast_cat_list = {}
     podcast_final = get_podcast_description(podcast_data)
             
     for category, podcasts in podcast_data.items():
         podcast_cat_list[category] = [{podcast: podcast_final.get(podcast, 'No description available')} for podcast in podcasts]
 
-    write_to_json_file(podcast_cat_list,'podcast_2024.json')
+    write_to_json_file(podcast_cat_list,'podcast_2024_lst.json')
 
 
 def fetch_webpage_data(url):
@@ -52,7 +53,8 @@ def get_podcast_data(webpage_data):
     for i in podcasts[1].findAll('a'):
         job_element = i['href']
         category_name = job_element.strip().split('/')[-1].split('-')[1]
-        if category_name == 'arts':
+        if category_name in podcast_lst:
+            print(category_name)
             podcast_lst_data = fetch_webpage_data(job_element)
             podcast_data_soup = BeautifulSoup(podcast_lst_data, 'html.parser')
             podcast_final = list(set([html_string.get_text() for html_string in tb.find_all('a',attrs= {"class":"link blue"}) for tb in podcast_data_soup.find_all('table')]))
@@ -65,7 +67,7 @@ def get_podcast_description(podcast_list):
     """
 
     pod_description = {}
-    for key,values in podcast_cat_list.items():
+    for key,values in podcast_list.items():
         for strings in values:
             actual_value = [ele for ele in split_strings_by_delimiter(strings) if ele]
 
